@@ -1,0 +1,31 @@
+version: '3.5'
+
+services:
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    container_name: postgres
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+    expose:
+      - "5433"
+    ports:
+      - '5433:5433'
+    command:
+      - '-p 5433'
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: todoo-back
+    environment:
+      - PORT=${PORT}
+    ports:
+      - '3000:3000'
+    depends_on:
+      - postgres
+    volumes:
+      - ./src:/app/src

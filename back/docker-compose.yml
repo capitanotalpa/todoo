@@ -23,6 +23,7 @@ services:
     container_name: todoo-back
     environment:
       - PORT=${PORT}
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5433/todoo?schema=public
     ports:
       - '3000:3000'
     depends_on:
